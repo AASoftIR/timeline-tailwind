@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body
+		class="bg-slate-950 w-screen h-min text-white font-serif overflow-x-hidden flex flex-col items-center justify-center"
+	>
+		<div
+			class="fixed top-8 mx-auto px-12 py-4 rounded-2xl bg-white text-2xl font-mono duration-300 z-[10000] text-black msg translate-y-[-150%]"
+		>
+			Joke
+		</div>
+		<div class="px-16 py-4 grid grid-cols-2 gap-x-2 relative z-[100]">
+			<div class="lines grid grid-cols-1 p-2 items-center">
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-yellow-300 duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+				<div
+					class="w-16 h-[4.2px] bg-slate-500 rounded-2xl bg-white duration-500 ease origin-center hover:h-[4.5px] hover:cursor-pointer"
+				></div>
+			</div>
+			<div class="year grid grid-cols-1 p-2">
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2018
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2019
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2020
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2021
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2022
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2023
+				</div>
+				<div
+					class="block duration-300 overflow-visible scale-x-0 text-center text-xl pl-2"
+				>
+					2024
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const jsConfetti = new JSConfetti();
+
+				let lines = document.querySelectorAll(".lines div");
+				lines.forEach((el, idx) => {
+					el.addEventListener("click", async (ele) => {
+						// bg-yellow-300
+						lines.forEach((e) => {
+							if (e.classList.contains("bg-yellow-300")) {
+								e.classList.remove("bg-yellow-300");
+								e.classList.add("bg-white");
+							}
+						});
+						ele.target.classList.add("bg-yellow-300");
+						let year = document.querySelectorAll(".year div")[idx].textContent;
+						jsConfetti.addConfetti({
+							emojis: ["⚡️", "💥", year],
+							confettiColors: ["#ffffff"],
+							emojiSize: 50,
+							confettiNumber: 100,
+						});
+						if (document.querySelector(".wm")) {
+							document.querySelector(".wm").classList.add("translate-x-[150%]");
+							document.querySelector(".wm").classList.add("!duration-300");
+							setTimeout(() => {
+								document.querySelector(".wm").remove();
+							}, 500);
+						}
+
+						let element = `<div class="text-[40vw] fixed text-center mx-auto text-slate-900 font-sans duration-[1s] transition-all linear origin-center translate-x-[-250%] wm rotate-[-25deg] z-10 translate-y-[20%] select-none">${year}</div>`;
+						document.body.insertAdjacentHTML("beforeend", element);
+						setTimeout(() => {
+							document
+								.querySelector(".wm")
+								.classList.remove("translate-x-[-250%]");
+						}, 600);
+
+						let gpt = await fetch(
+							`https://heroapi.ir/api/duckduckgo/chat?query=tell a creative and funny joke about the Year: ${year} and please just give me the joke and no explanation or prefix text just the joke&model=claude-3-haiku&timeout=60`
+						);
+						let data = JSON.parse(await gpt.json());
+						if (data.success) {
+							console.log(data);
+							document.querySelector(".msg").innerHTML = data.data.message;
+							document
+								.querySelector(".msg")
+								.classList.remove("translate-y-[-150%]");
+							setTimeout(() => {
+								document
+									.querySelector(".msg")
+									.classList.add("translate-y-[-150%]");
+							}, 4000);
+						}
+					});
+				});
+				lines.forEach((ele, idx) => {
+					ele.addEventListener("mouseover", (e) => {
+						e.target.classList.add("scale-x-[1.95]");
+						if (e.target.nextElementSibling)
+							e.target.nextElementSibling.classList.add("scale-x-[1.35]");
+						if (
+							e.target.nextElementSibling &&
+							e.target.nextElementSibling.nextElementSibling
+						)
+							e.target.nextElementSibling.nextElementSibling.classList.add(
+								"scale-x-[1.15]"
+							);
+						if (e.target.previousElementSibling)
+							e.target.previousElementSibling.classList.add("scale-x-[1.35]");
+						if (
+							e.target.previousElementSibling &&
+							e.target.previousElementSibling.previousElementSibling
+						)
+							e.target.previousElementSibling.previousElementSibling.classList.add(
+								"scale-x-[1.15]"
+							);
+
+						document.querySelectorAll(".year div").forEach((ele) => {
+							ele.classList.add("scale-x-0");
+						});
+
+						document
+							.querySelectorAll(".year div")
+							[idx].classList.remove("scale-x-0");
+					});
+					ele.addEventListener("mouseout", (e) => {
+						e.target.classList.remove("scale-x-[1.95]");
+						if (e.target.nextElementSibling)
+							e.target.nextElementSibling.classList.remove("scale-x-[1.35]");
+						if (
+							e.target.nextElementSibling &&
+							e.target.nextElementSibling.nextElementSibling
+						)
+							e.target.nextElementSibling.nextElementSibling.classList.remove(
+								"scale-x-[1.15]"
+							);
+						if (e.target.previousElementSibling)
+							e.target.previousElementSibling.classList.remove(
+								"scale-x-[1.35]"
+							);
+						if (
+							e.target.previousElementSibling &&
+							e.target.previousElementSibling.previousElementSibling
+						)
+							e.target.previousElementSibling.previousElementSibling.classList.remove(
+								"scale-x-[1.15]"
+							);
+						document.querySelectorAll(".year div").forEach((ele, idx) => {
+							if (
+								!document
+									.querySelectorAll(".lines div")
+									[idx].classList.contains("bg-yellow-300")
+							) {
+								ele.classList.add("scale-x-0");
+							}
+						});
+					});
+				});
+			});
+		</script>
+	</body>
+</html>
