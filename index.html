@@ -120,6 +120,7 @@
 							{
 								method: "GET",
 								"Content-Type": "application/json",
+								"Access-Control-Allow-Origin": "*",
 							}
 						);
 						let data = JSON.parse(await gpt.json());
