@@ -1,3 +1,5 @@
 node_modules
 proxy.js
 input.css
+package.json
+package-lock.json
