@@ -115,18 +115,11 @@
 								.classList.remove("translate-x-[-250%]");
 						}, 600);
 
-						let gpt = await fetch(
-							`https://heroapi.ir/api/duckduckgo/chat?query=tell a creative and funny joke about the Year: ${year} and please just give me the joke and no explanation or prefix text just the joke&model=claude-3-haiku&timeout=60`,
-							{
-								method: "GET",
-								"Content-Type": "application/json",
-								"Access-Control-Allow-Origin": "*",
-							}
-						);
-						let data = JSON.parse(await gpt.json());
-						if (data.success) {
-							console.log(data);
-							document.querySelector(".msg").innerHTML = data.data.message;
+						let gpt = await fetch(`https://v2.jokeapi.dev/joke/Any`);
+						let data = await gpt.json();
+						if (!data.error) {
+							document.querySelector(".msg").innerHTML =
+								data.setup + "<br>" + data.delivery;
 							document
 								.querySelector(".msg")
 								.classList.remove("translate-y-[-150%]");
