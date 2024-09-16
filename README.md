@@ -1,4 +1,4 @@
-# 🚀 HeroAPI Timeline Madness 🎉
+# 🚀 imeline Madness 🎉
 
 # LIVE=> https://aasoftir.github.io/timeline-tailwind
 
