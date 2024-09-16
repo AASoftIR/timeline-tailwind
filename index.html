@@ -115,11 +115,29 @@
 								.classList.remove("translate-x-[-250%]");
 						}, 600);
 
-						let gpt = await fetch(`https://v2.jokeapi.dev/joke/Any`);
-						let data = await gpt.json();
+						let gpt = await fetch(`https://api.binjie.fun/api/generateStream`, {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+								Referer: "https://chat18.aichatos8.com/",
+								Origin: "https://chat18.aichatos8.com",
+							},
+							body: JSON.stringify({
+								prompt:
+									"tell a creative and awesome joke about the Year of the " +
+									year +
+									" ,please just give the joke without any explain and just tell me the joke",
+								userId: "#/chat/1724442116057",
+								network: "True",
+								system: "",
+								withoutContext: "False",
+								stream: "False",
+							}),
+						});
+						let data = await gpt.text();
+						console.log(data);
 						if (!data.error) {
-							document.querySelector(".msg").innerHTML =
-								data.setup + "<br>" + data.delivery;
+							document.querySelector(".msg").innerHTML = data;
 							document
 								.querySelector(".msg")
 								.classList.remove("translate-y-[-150%]");
