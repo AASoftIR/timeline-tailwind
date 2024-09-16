@@ -6,7 +6,6 @@
 
 ## What’s Happening?! 🤯
 
-- Fetching from **HeroAPI** 📡
 - Displaying random jokes 🤣 and cool timelines 📅
 - Exploding confetti 🎉 when you least expect it! 💥
 
