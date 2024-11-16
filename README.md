@@ -1,4 +1,4 @@
-# 🚀 imeline Madness 🎉
+# 🚀 Timeline Madness 🎉
 
 # LIVE=> https://aasoftir.github.io/timeline-tailwind
 
